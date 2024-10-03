@@ -1,0 +1,58 @@
+---
+title: "VisualShapePattern2"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: inline
+---
+
+# Load required libraries
+library(confreq)
+library(ggplot2)
+
+# Step 1: Reading the dataset
+covid_1 <- read.table("SantePublic.csv", sep=";", header=TRUE, quote="\"")
+
+# Step 2: Preparing the data for CFA
+covid_2 <- dat2fre(fre2dat(covid_1, fact=TRUE))
+
+# Step 3: Perform the CFA analysis
+resd1 <- CFA(covid_2, alpha=0.05, bintest = FALSE, form="~ Status + Age")
+
+# Summary of results
+summary(resd1)
+
+# Step 4: Enhanced Visualization
+plot(resd1, type = "z.pChi", fill = c("#D55E00", "#0072B2", "#F0E442"),
+     main = "Configural Frequency Analysis: COVID-19 Data",
+     xlab = "Status and Age Interaction",
+     ylab = "z-values of Pearson Chi-squared test",
+     cex.lab = 1.5,    # Larger axis labels
+     cex.main = 1.7,   # Larger plot title
+     cex.axis = 1.3)   # Larger axis text
+
+# Adding ggplot enhancements to make it even more impressive
+res_plot <- data.frame(
+  Cell = as.factor(resd1$cells),
+  z_pChi = resd1$z.pChi,
+  Expected = resd1$expected
+)
+
+ggplot(res_plot, aes(x = Cell, y = z_pChi, fill = Expected)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_gradient(low = "grey", high = "#0072B2") +
+  theme_minimal() +
+  labs(
+    title = "Enhanced Configural Frequency Analysis Results",
+    x = "Cell (Status + Age Group)",
+    y = "z-values of Pearson Chi-squared test",
+    fill = "Expected Frequency"
+  ) +
+  theme(
+    plot.title = element_text(size = 16, face = "bold"),
+    axis.title = element_text(size = 14),
+    axis.text = element_text(size = 12),
+    legend.title = element_text(size = 12),
+    legend.text = element_text(size = 10)
+  ) +
+  geom_text(aes(label = round(z_pChi, 2)), vjust = -0.5, size = 4)

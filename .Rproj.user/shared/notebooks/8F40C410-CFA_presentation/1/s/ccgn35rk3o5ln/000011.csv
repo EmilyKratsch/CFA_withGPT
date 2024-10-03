@@ -1,0 +1,3 @@
+"0","library(confreq)"
+"0","covid_1 <- read.table(""SantePublic.csv"", sep="";"", header=TRUE, quote=""\"""")"
+"0","covid_1"

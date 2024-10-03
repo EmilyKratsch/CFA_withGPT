@@ -1,0 +1,35 @@
+---
+title: "visualshape_II"
+output: html_document
+date: "2024-06-19"
+---
+Edit or open a R Markdown file.
+```{r}
+library(confreq)
+covid_1 <- read.table("SantePublic.csv", sep=";", header=TRUE, quote="\"")
+covid_1
+```
+12 cells
+R commands to prepare the data,
+compute and show the CFA results
+class(d1) <- c("data.frame", "Pfreq")
+d1
+
+```{r}
+covid_2<-dat2fre(fre2dat(covid_1,fact=TRUE))
+covid_2
+```
+to start the function CFA
+first order CFA
+the results are written into the object 'result1'
+Age: '1=<18', 2='18-64', 3='65-74', 4='> 74'
+Status: 1='diagnosed', 2='intensive care' 3='thought disorder'
+
+```{r}
+
+resd1 <- CFA(covid_2,alpha=0.05, bintest = FALSE, form="~ Status + Age")
+summary(resd1)
+plot(resd1,type = "z.pChi",fill = c("red","green","grey"))
+```
+
+Then push the 'Knit button'.

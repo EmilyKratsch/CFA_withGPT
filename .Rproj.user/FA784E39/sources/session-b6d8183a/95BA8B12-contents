@@ -1,0 +1,96 @@
+---
+title: "CFA_GPTsupport"
+format: pdf
+editor: visual
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+```{r}
+library(quarto)
+```
+
+## Running Code
+
+## **Tip 1: Getting Help from ChatGPT with Prompt Engineering**
+
+You can use the following prompts to prepare GPT for working with CFA. Use GPT4 if you can. Still all GTPs have a lot more trouble with R than with other programming languages. Be extra critical when taking reading the information it gives you. Keep your instructions as small and precise as possible.
+
+**Comprehensive Prompt for Configural Frequency Analysis (CFA) Using the `confreq` Package in R:**
+
+"I want to train you to consistently give correct answers about Configural Frequency Analysis (CFA) and the R package `confreq`. It is especially important that you do not mix up Configural Frequency Analysis (CFA) with Confirmatory Factor Analysis, which is also often referred to as CFA. For information about the R package `confreq`, you should only ever use information from this CRAN page: <https://rdrr.io/cran/confreq/>.
+
+When providing information, please follow these instructions:
+
+1.  Always assume that 'CFA' refers to Configural Frequency Analysis unless explicitly stated otherwise. Tailor your responses to a beginner's expertise level.
+
+2.  There are no specific key points to emphasize. However, if any part of your response has a small likelihood of being correct, clearly state that you are not sure, rather than making assumptions or providing potentially incorrect information.
+
+3.  Always link directly to the official CRAN documentation for the `confreq` package [https://rdrr.io/cran/confreq/](http://127.0.0.1:31239/#0 "https://rdrr.io/cran/confreq/") whenever relevant.
+
+4.  Use the following code as a typical example of performing Configural Frequency Analysis with data saved in a CSV file on the computer:
+
+library(confreq)
+
+cfa \<- read.table("BeispielCFA.csv", sep=";", header=TRUE, quote=""")
+
+##### Data to patterned frequencies
+
+cfa_new \<- dat2fre(fre2dat(cfa))
+
+cfa_new
+
+##### Start the CFA function, results stored in "resd1"
+
+resd1 \<- CFA(cfa_new, form="\~ Seizures + Birth + Intelligence")
+
+##### Tabulated printout
+
+summary(resd1, sorton="pat.")
+
+5.  Rely on the most recent stable version of the `confreq` package unless otherwise directed.
+
+Please provide clear, step-by-step explanations following these instructions to ensure accurate and reliable guidance on performing Configural Frequency Analysis using the `confreq` package in R."
+
+## Tip 2: Use custom GPTs
+
+Open GPT3 or GPT4/GPT4o. Go to "discover GPTs" on the left side bar. Type into the search bar: "R and R Studio". Chose R and R Studio by Widenex or R and R Studio Tutor by Jose Calvo. Klick to open and paste the prompts from Tip 1.
+
+## Tip 3: Alternative AIs
+
+GPT is currently one of the best AIs for R. But it still a lot more trouble with R than with other programming languages such as Java. But often it is useful. One problem is that you often don't know where GPT got the information from. We tried to avoid this by giving GPT the CRAN link to confreq. Still it might use other sources too. One way to avoid this is by using **perplexity.ai**. This gives you the links to all the information it used. This way you can see where the AI might have gotten certain code from (for example from github, stack overflow or reddit). This can be very helpful in determining if the information can be trusted and might help you fix errors.
+
+## Example
+
+```{r}
+library(confreq)
+```
+
+```{r}
+cfa <- read.table("SantePublic.csv", sep=";", header=TRUE, quote="\"")
+```
+
+```{r echo=TRUE}
+#data to patterned frequencies 
+
+print(str(cfa))
+
+cfa_new <- dat2fre(fre2dat(cfa)) 
+cfa_new
+```
+
+```{r}
+#to start the function CFA the results are written into the object "resd1" 
+resd1 <- CFA(cfa_new, form="~ Seizures + Birth + Intelligence")
+```
+
+```{r}
+#tabulated printout 
+summary(resd1, sorton="pat.")
+```
+
+```{r}
+View(cfa)
+```

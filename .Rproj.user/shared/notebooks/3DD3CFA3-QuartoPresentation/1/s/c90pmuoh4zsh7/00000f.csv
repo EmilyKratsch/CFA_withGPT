@@ -1,0 +1,65 @@
+"0","library(confreq)"
+"0","library(dplyr)"
+"2","
+Attache Paket: ‘dplyr’
+
+"
+"2","Die folgenden Objekte sind maskiert von ‘package:stats’:
+
+    filter, lag
+
+"
+"2","Die folgenden Objekte sind maskiert von ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+"
+"0","library(knitr)"
+"0","library(kableExtra)"
+"2","Warnung:"
+"2"," Paket ‘kableExtra’ wurde unter R Version 4.4.1 erstellt
+"
+"2","
+Attache Paket: ‘kableExtra’
+
+"
+"2","Das folgende Objekt ist maskiert ‘package:dplyr’:
+
+    group_rows
+
+"
+"0","# Create data for gender and vote frequency"
+"0","gender <- c(""males"",""males"",""females"",""females"")"
+"0","vote <- c(""pro"",""con"",""pro"",""con"")"
+"0","Freq.d1 <- c(100,50,60,190)"
+"0",""
+"0","# Combine into a data frame and set class"
+"0","d1 <- data.frame(gender, vote, Freq=Freq.d1)"
+"0","class(d1) <- c(""data.frame"", ""Pfreq"")"
+"0",""
+"0","# Compute and show the CFA results"
+"0","resd1 <- CFA(d1, form=""~gender + vote"")"
+"0",""
+"0","# Extract the local tests results"
+"0","local_tests <- resd1$local.tests"
+"0",""
+"0","# Create a data frame for the local tests"
+"0","local_tests_df <- data.frame("
+"0","  Test = local_tests$names,"
+"0","  Chi_Square = local_tests$chi.sq,"
+"0","  df = local_tests$df,"
+"0","  p_value = local_tests$p"
+"0",")"
+"0",""
+"0","# Format p-values to APA style"
+"0","local_tests_df$p_value <- ifelse(local_tests_df$p_value < .001, ""< .001"", "
+"0","                                 sprintf(""%.3f"", local_tests_df$p_value))"
+"0",""
+"0","# Create APA style table using kableExtra"
+"0","kable(local_tests_df, format = ""html"", caption = ""Local Tests in APA Style"") %>%"
+"0","  kable_styling(full_width = F, position = ""center"") %>%"
+"0","  add_header_above(c("" "" = 1, ""APA Style Local Tests"" = 3)) %>%"
+"0","  column_spec(2:4, bold = TRUE)"
+"2","Fehler in htmlTable_add_header_above(kable_input, header, bold, italic,  : 
+  The new header row you provided has a total of 4 columns but the original kable_input has 1.
+"
